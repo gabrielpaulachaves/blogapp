@@ -17,6 +17,14 @@ app.set("view engine" ,"handlebars")
 app.use(bodyparser.urlencoded({extended: true}))
 app.use(bodyparser.json()) 
 
+//mongoose
+mongoose.Promise = global.Promise
+    mongoose.connect("mongodb://localhost/blogapp").then(()=>{
+        console.log("mongoose conectado")
+    }).catch((err)=>{
+        console.log(err)
+    })
+
 //public
 app.use(express.static(path.join(__dirname, "public")))  
 
