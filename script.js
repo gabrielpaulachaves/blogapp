@@ -10,6 +10,8 @@ const mongoose = require("mongoose")
 const app = express()
 const admin = require("./routes/admin")
 const path = require("path")
+
+
 //configurações
 app.engine("handlebars", engine({defaultLayout:"main"}))
 app.set("view engine" ,"handlebars")
