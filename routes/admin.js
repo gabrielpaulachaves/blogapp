@@ -24,13 +24,13 @@ router.get("/cat/add", (req, res)=>{
     res.render("adm/addcat")
 })
 
-router.post("/admin/cat/nova", (req, res)=>{
+router.post("/cat/nova", (req, res)=>{
     const novacategoria = {
         nome: req.body.nome,
         slug: req.body.slug
     }
 
-    new categoria(novacategoria).save().then(()=>{console.log("cadastrado")})
+    new categoria(novacategoria).save().then(()=>{console.log("cadastrado")}).catch((err)=>{console.log(err)})
 })
 
 module.exports = router
