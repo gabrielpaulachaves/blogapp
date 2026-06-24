@@ -3,6 +3,12 @@
 //npm install body-parser --save
 //npm install --save mongoose
 
+//24-06-2026, Como configurar sessões:
+//npm install --save express-session
+//npm instal --save connect-flash
+const session = require("express-session")
+const flash = require("connect-flash")
+
 const express = require("express")
 const {engine} = require("express-handlebars")
 const bodyparser = require("body-parser")
@@ -13,6 +19,23 @@ const path = require("path")
 
 
 //configurações
+
+//24-06-2026, configurando a sessao
+app.use(session({ //aqui a gente cria a session, e na session criamos um objeto, com 3 propriedades
+    secret: "sessionfraca", //chave para gerar uma sessao
+    resave: true,
+    saveUninitialized: true
+}))
+app.use(flash())
+//é importante que configurar o flash seja logo apos configurar a session
+
+//middleware
+app.use((req, res, next)=>{ //aqui vamos criar duas variaveis que poderemos acessar em qualquer parte da aplicacao, para criar, será res.locals."nome da variavel" = "valor"
+    res.locals.success_msg = req.flash("success_msg")
+    res.locals.error_msg = req.flash("error_msg")
+    next()
+})
+
 app.engine("handlebars", engine({defaultLayout:"main"}))
 app.set("view engine" ,"handlebars")
 
