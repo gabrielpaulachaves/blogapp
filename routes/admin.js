@@ -30,6 +30,7 @@ router.post("/cat/nova", (req, res)=>{
         slug: req.body.slug
     }
 
+        //aqui eu to criando um documento novo para a collection (a collection é como a tabela, e o documento é a linha)
     new categoria(novacategoria).save().then(()=>{console.log("cadastrado")}).catch((err)=>{console.log(err)})
 })
 

@@ -30,6 +30,11 @@ mongoose.Promise = global.Promise
 //public
 app.use(express.static(path.join(__dirname, "public")))  
 
+app.use((req, res, next) =>{ //é assim que se cria um middleware, usa req, res e next, e no final do codigo da funcao, usar next()
+    console.log("isso é um middleware")
+    next()
+})
+
 //rotas
 app.use("/admin", admin)
 
@@ -38,3 +43,4 @@ const port = 3333
 app.listen(port, ()=>{
     console.log("Servidor ligado!")
 })
+
