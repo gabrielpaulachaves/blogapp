@@ -18,15 +18,22 @@ router.get("/posts", (req, res)=>{
 
 
 router.get("/cat", (req, res)=>{
-    res.render("adm/cat")
+            //o .lean() permite que os dados venham em formato objeto em javascript, facilitando a leitura
+            //o .sort vai ordenar baseado na linha date da collection
+     categoria.find().sort({date: "desc"}).lean().then((categorias) =>{ //o "categorias" dentro do then é o nome do resultado dado após o find(), esse find() retorna uma promise, por isso utilizeei o then, e ali eu nomeei o resultado da busca do find
+        res.render("adm/cat", {categorias: categorias})
+     }).catch((err)=>{req.flash("error_msg", "Erro ao listar categorias")
+        res.redirect("/admin")
+     })
+    //o find serve para listar todos os documentos que existem
+    
 })
 
 router.get("/cat/add", (req, res)=>{
     res.render("adm/addcat")
 })
 
-router.post("/cat/nova", (req, res)=>{
-    
+router.post("/cat/nova", (req, res)=>{ 
     //criando validaçao manual
     let erros = [ ]
     if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
@@ -39,7 +46,7 @@ router.post("/cat/nova", (req, res)=>{
        erros.push({texto: "nome muito curto"}) 
     }
     if(erros.length > 0){   //conseguimos passar dados para uma view atraves do render
-        res.render("/adm/addcat", {erros: erros})
+        res.render("adm/addcat", {erros: erros})
     }else{
 
           const novacategoria = {
