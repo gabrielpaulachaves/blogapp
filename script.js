@@ -7,7 +7,7 @@
 //npm install --save express-session
 //npm instal --save connect-flash
 const session = require("express-session")
-const flash = require("connect-flash")
+const flash = require("connect-flash") //o flash é uma sessao, dura só uma vez e some quando o usuario recarrega a pagina
 
 const express = require("express")
 const {engine} = require("express-handlebars")
@@ -52,11 +52,6 @@ mongoose.Promise = global.Promise
 
 //public
 app.use(express.static(path.join(__dirname, "public")))  
-
-app.use((req, res, next) =>{ //é assim que se cria um middleware, usa req, res e next, e no final do codigo da funcao, usar next()
-    console.log("isso é um middleware")
-    next()
-})
 
 //rotas
 app.use("/admin", admin)
