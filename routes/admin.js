@@ -33,6 +33,16 @@ router.get("/cat/add", (req, res)=>{
     res.render("adm/addcat")
 })
 
+router.get("/cat/edit/:id", (req, res)=>{
+    categoria.findOne({_id:req.params.id}).lean().then((categoria)=>{
+        res.render("adm/editcat", {categoria: categoria})
+    }).catch((err)=>{
+        req.flash("error_msg", "Esta categoria não existe")
+        res.redirect("/admin/cat")
+    })
+    
+})
+
 router.post("/cat/nova", (req, res)=>{ 
     //criando validaçao manual
     let erros = [ ]
@@ -58,13 +68,23 @@ router.post("/cat/nova", (req, res)=>{
         req.flash("success_msg", "categoria criada com sucesso!") //caso success_msg seja verdadeiro, a mensagem "categoria criada com sucesso!" vai ser o valor da variavel "success_msg"
         res.redirect("/admin/cat")}).catch((err)=>{
             req.flash("error_msg", "erro ao criar categoria :(")
-            res.redirect("/admin")})  
-        
-    }
+            res.redirect("/admin")})     
+}
+})
+
+
+router.post("/cat/edit", (req, res)=>{
+    categoria.findOneAndUpdate({_id:req.body.id}, {nome: req.body.nome, slug: req.body.slug}).then((categoria)=>{
+            
+                req.flash("success_msg", "Categoria editada com sucesso")
+                res.redirect("/admin/cat")
     
 
-
-
+    }).catch(err =>{
+        req.flash("error_msg", "Erro ao editar categoria")
+        res.redirect("/admin/cat")
+    })
 })
+   
 
 module.exports = router
