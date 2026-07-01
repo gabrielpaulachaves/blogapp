@@ -34,6 +34,7 @@ router.get("/cat/add", (req, res)=>{
 })
 
 router.get("/cat/edit/:id", (req, res)=>{
+                 //vai buscar pelo _id que seja igual ao id passado no parametro
     categoria.findOne({_id:req.params.id}).lean().then((categoria)=>{
         res.render("adm/editcat", {categoria: categoria})
     }).catch((err)=>{
@@ -41,6 +42,16 @@ router.get("/cat/edit/:id", (req, res)=>{
         res.redirect("/admin/cat")
     })
     
+})
+
+router.get("/cat/delete/:id", (req, res)=>{
+    categoria.findByIdAndDelete(req.params.id).then((categoria)=>{
+        req.flash("success_msg", "categoria deletada com sucesso!")
+        res.redirect("/admin/cat")
+    }).catch((err)=>{
+        req.flash("error_msg", "Algum erro ocorreu ao deletar essa categoria")
+        res.redirect("/admin/cat")
+    })
 })
 
 router.post("/cat/nova", (req, res)=>{ 
