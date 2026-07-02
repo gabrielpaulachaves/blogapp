@@ -3,6 +3,7 @@ const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
 require("../models/Cat")
+require("../models/Pos")
 
 const categoria = mongoose.model("categorias")
 
