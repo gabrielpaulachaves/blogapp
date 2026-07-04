@@ -6,16 +6,24 @@ require("../models/Cat")
 require("../models/Pos")
 
 const categoria = mongoose.model("categorias")
+const postagens = mongoose.model("postagens")
 
 router.get("/ini", (req, res)=>{
     res.render("adm/index")
 
 })
 
-router.get("/posts", (req, res)=>{
-    res.send("pagina de posts")
+router.get("/post", (req, res)=>{
+    res.render("adm/pos")
 })
 
+router.get("/post/add", (req, res)=>{
+                                //resultado da consulta do find está guardado nesse parametro
+    categoria.find().lean().then(categorias =>{
+        res.render("adm/addpos", {cat: categorias})
+                                    //forma como o parametro será chamado na view
+    })  
+})
 
 
 router.get("/cat", (req, res)=>{
@@ -82,6 +90,11 @@ router.post("/cat/nova", (req, res)=>{
             req.flash("error_msg", "erro ao criar categoria :(")
             res.redirect("/admin")})     
 }
+})
+
+router.post("/pos/nova", (req, res)=>{
+
+    
 })
 
 

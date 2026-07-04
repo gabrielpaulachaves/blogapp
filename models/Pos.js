@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const schema = mongoose.Schema
+const schema = mongoose.Schema 
 
 const pos = new schema({
     titulo:{
@@ -31,5 +31,5 @@ const pos = new schema({
 })
 
 mongoose.model("postagens", pos)
-
+//
 
