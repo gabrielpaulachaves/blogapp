@@ -14,8 +14,16 @@ router.get("/ini", (req, res)=>{
 })
 
 router.get("/post", (req, res)=>{
-    res.render("adm/pos")
-})
+    async function buscar(){
+        try{
+            const postagem = await postagens.find().sort({date: "desc"}).lean()
+            const categorias = await categoria.find().sort({date: "desc"}).lean()
+             res.render("adm/pos", {postagem: postagem, categoria: categorias})
+        }catch(err){
+            req.flash("error_msg", "erro ao listar suas postagens")
+        res.redirect("/admin")
+    }}
+buscar()})
 
 router.get("/post/add", (req, res)=>{
                                 //resultado da consulta do find está guardado nesse parametro
@@ -92,7 +100,46 @@ router.post("/cat/nova", (req, res)=>{
 }
 })
 
-router.post("/pos/nova", (req, res)=>{
+router.post("/post/nova", (req, res)=>{
+
+    let erros = [ ]
+
+    if(!req.body.titulo || req.body.titulo == undefined || req.body.titulo == null){
+        erros.push({texto:"Título indefinido"})
+    }
+    if(!req.body.slug || req.body.slug == undefined || req.body.slug == null){
+         erros.push({texto:"slug indefinido"})
+    }
+    if(!req.body.descricao || req.body.descricao == undefined || req.body.descricao == null){
+        erros.push({texto: "descrição indefinida"})
+    }
+    if(!req.body.conteudo || req.body.conteudo == undefined || req.body.conteudo == null){
+        erros.push({texto: "Conteúdo indefinido"})
+    }
+    if(!req.body.categoria || req.body.categoria == undefined || req.body.categoria == null){
+        erros.push({texto: "categoria indefinida"})
+    }
+    if(erros.length > 0){
+        res.render("adm/addpos", {erros: erros})
+    }
+        else{
+          const novapostagem = {
+        titulo: req.body.titulo,
+        slug: req.body.slug,
+        descricao: req.body.descricao,
+        conteudo: req.body.conteudo,    
+        categoria: req.body.categoria
+    }
+
+
+        new postagens(novapostagem).save().then(()=>{
+        req.flash("success_msg", "Postagem realizada com sucesso!")
+        res.redirect("/admin/post")
+    }).catch(err =>{
+        req.flash("error_msg", "Um erro ocorreu ao realizar uma nova postagem")
+        res.redirect("/admin/post")
+    })
+    }
 
     
 })
