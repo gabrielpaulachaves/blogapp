@@ -2,7 +2,6 @@
 <hr>
 <a href="/admin/post/add"><button  class="btn btn-success">Adicionar</button></a>
 
-
 {{#each postagem}}
     <div class="card mt-4">
         <div class="card-body">
@@ -11,7 +10,9 @@
             <small class="mt-4">{{descricao}}</small><br>
             <small class="mt-4">{{conteudo}}</small>
             <h5 class="mt-4">Referente a categoria: {{categoria}}</h5>
-            <small>{{data}}</small>
+            <small>{{data}}</small><br>
+            <a href="/admin/post/edit/{{_id}}"><button class="btn btn-success mt-4">Editar</button><br></a>
+            <button class="btn btn-danger mt-4">Deletar</button>
         </div>
     </div>
 {{else}}

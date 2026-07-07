@@ -61,6 +61,21 @@ router.get("/cat/edit/:id", (req, res)=>{
     
 })
 
+router.get("/post/edit/:id", (req, res)=>{
+    async function editar(){
+        try{
+            const postaedit =  await postagens.findOne({_id:req.params.id}).lean()
+            const catedit = await categoria.find().lean()
+
+             res.render("adm/editpos", {postagem: postaedit, categoria: catedit})
+        }
+        catch(err){
+                    req.flash("error_msg", "Esta postagem não existe")
+        res.redirect("/admin/post")
+        }
+    }
+editar()})
+
 router.get("/cat/delete/:id", (req, res)=>{
     categoria.findByIdAndDelete(req.params.id).then((categoria)=>{
         req.flash("success_msg", "categoria deletada com sucesso!")
@@ -155,6 +170,17 @@ router.post("/cat/edit", (req, res)=>{
     }).catch(err =>{
         req.flash("error_msg", "Erro ao editar categoria")
         res.redirect("/admin/cat")
+    })
+})
+
+router.post("/post/edit", (req, res)=>{
+    postagens.findOneAndUpdate({_id:req.body.id}, {titulo:req.body.titulo, slug: req.body.slug, descricao: req.body.descricao, conteudo: req.body.descricao, conteudo:req.body.conteudo, categoria:req.body.categoria}).then((postagem)=>{
+        
+        req.flash("success_msg", "postagem editada com sucesso")
+        res.redirect("/admin/post")
+    }).catch(err =>{
+        req.flash("error_msg", "Erro ao editar categoria")
+        res.redirect("/admin/post") 
     })
 })
    
