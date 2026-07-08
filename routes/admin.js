@@ -86,6 +86,16 @@ router.get("/cat/delete/:id", (req, res)=>{
     })
 })
 
+router.get("/post/delete/:id", (req, res)=>{
+    postagens.findOneAndDelete({_id:req.params.id}).then(()=>{
+        req.flash("success_msg", "Postagem deletada com sucesso!")
+        res.redirect("/admin/post")
+    }).catch(err =>{
+        req.flash("error_msg", "Erro ao deletar uma postagem")
+        res.redirect("/admin/post")
+    })
+})
+
 router.post("/cat/nova", (req, res)=>{ 
     //criando validaçao manual
     let erros = [ ]
