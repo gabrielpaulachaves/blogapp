@@ -14,16 +14,22 @@ router.get("/ini", (req, res)=>{
 })
 
 router.get("/post", (req, res)=>{
-    async function buscar(){
-        try{
-            const postagem = await postagens.find().sort({date: "desc"}).lean()
-            const categorias = await categoria.find().sort({date: "desc"}).lean()
-             res.render("adm/pos", {postagem: postagem, categoria: categorias})
-        }catch(err){
-            req.flash("error_msg", "erro ao listar suas postagens")
-        res.redirect("/admin")
-    }}
-buscar()})
+    //usando populate
+    //populate é como um inner join, só que no mongoose, ele faz uma busca automatica baseada na ref. Por exemplo: type: schema.Types.ObjectId,
+       // ref: "categorias",
+       // required: true
+       //aqui dizemos que o campo categoria guarda o _id da outra collection "categoria" (usando ref: "")
+       //aqui a gente diz para qual documento da categoria esse documento da postagem se atrela, baseado no _id da categoria (decarado no ref). o populate vai ver que esse id que ele é atrelado é de uma collection e irá fazer uma consulta automatica dessa collection
+
+       //na view, o nome precisa ser igual ao da collection, ex.: <h5 class="mt-4">Referente a categoria: {{categoria.nome}}</h5>
+
+       postagens.find().populate("categoria").sort({date: "desc"}).lean().then((postagem)=>{
+        res.render("adm/pos", {post: postagem})
+       }).catch((err)=>{
+            req.flash("error_msg", "erro ao exibir postagens")
+            res.redirect("/admin")
+       })
+})
 
 router.get("/post/add", (req, res)=>{
                                 //resultado da consulta do find está guardado nesse parametro

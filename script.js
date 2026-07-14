@@ -17,8 +17,12 @@ const app = express()
 const admin = require("./routes/admin")
 const path = require("path")
 
+require("./models/Pos")
 
 //configurações
+
+const postagens = mongoose.model("postagens")
+
 
 //24-06-2026, configurando a sessao
 app.use(session({ //aqui a gente cria a session, e na session criamos um objeto, com 3 propriedades
@@ -60,6 +64,19 @@ mongoose.Promise = global.Promise
 app.use(express.static(path.join(__dirname, "public")))  
 
 //rotas
+app.get("/", (req, res)=>{
+    postagens.find().populate("categoria").sort({date:"desc"}).lean().then(postagens =>{
+        res.render("index", {postagem: postagens})
+    }).catch(err=>{
+        req.flash("error_msg", "Erro ao exibir postagens")
+        res.redirect("/404")
+    })
+})
+
+app.get("/404", (req, res)=>{
+    res.send("erro 404!")
+})
+
 app.use("/admin", admin)
 
 //porta
