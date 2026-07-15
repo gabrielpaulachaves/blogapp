@@ -1,0 +1,49 @@
+
+<div class="p-5 mb-5 text-white rounded-3 position-relative" 
+     style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; min-height: 250px;">
+  <div class="container-fluid py-4 text-center">
+    <h1 class="display-4 fw-bolder mb-2 text-shadow">Explore por Categorias</h1>
+    <p class="lead mb-0 opacity-75">Encontre as postagens organizadas pelos seus temas favoritos.</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    
+    {{#each categoria}}
+    <div class="col">
+
+      <div class="card h-100 text-center shadow-sm border-0 py-4 px-3">
+        
+
+        <div class="mx-auto bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center mb-3 shadow" 
+             style="width: 65px; height: 65px;">
+
+          <span class="fs-3 fw-bold text-uppercase">{{nome.[0]}}</span>
+        </div>
+
+        <div class="card-body p-0 d-flex flex-column">
+
+          <h4 class="card-title fw-bold text-dark mb-2 text-capitalize">{{nome}}</h4>
+          
+          <p class="card-text text-muted small flex-grow-1 mb-4">
+            Veja todas as postagens publicadas sobre essa categoria.
+          </p>
+          <div class="mt-auto">
+            <a href="/categoria/postagens/{{_id}}" class="btn btn-outline-primary rounded-pill px-4 fw-bold stretched-link">
+              Descobrir
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {{else}}
+    <div class="col-12 text-center py-5">
+      <h5 class="text-muted">Nenhuma categoria cadastrada ainda. 🗂️</h5>
+    </div>
+    {{/each}}
+
+  </div>
+</div>

@@ -18,11 +18,11 @@ const admin = require("./routes/admin")
 const path = require("path")
 
 require("./models/Pos")
-
+require("./models/Cat")
 //configurações
 
 const postagens = mongoose.model("postagens")
-
+const categorias = mongoose.model("categorias")
 
 //24-06-2026, configurando a sessao
 app.use(session({ //aqui a gente cria a session, e na session criamos um objeto, com 3 propriedades
@@ -64,6 +64,7 @@ mongoose.Promise = global.Promise
 app.use(express.static(path.join(__dirname, "public")))  
 
 //rotas
+
 app.get("/", (req, res)=>{
     postagens.find().populate("categoria").sort({date:"desc"}).lean().then(postagens =>{
         res.render("index", {postagem: postagens})
@@ -72,6 +73,45 @@ app.get("/", (req, res)=>{
         res.redirect("/404")
     })
 })
+
+app.get("/postagem/:slug", (req, res)=>{
+    postagens.findOne({slug:req.params.slug}).populate("categoria").lean().then(postagem =>{
+        if(postagem){
+            res.render("postagem/index", {postagem: postagem})
+        }else{
+            req.flash("error_msg", "Erro ao encontrar essa postagem")
+            res.redirect("/")
+        }
+    }).catch(err =>{
+        req.flash("error_msg", "erro 404")
+        res.redirect("/404")
+    })
+})
+
+app.get("/categoria", (req, res)=>{
+    categorias.find().sort({date: "desc"}).lean().then(categoria =>{
+        res.render("categoria/index", {categoria: categoria})
+    }).catch(err =>{
+        req.flash("error_msg", "erro ao listar categorias")
+        res.redirect("/")
+    })
+})
+
+app.get("/categoria/postagens/:id", (req, res)=>{
+    
+async function buscar() {
+
+    try{
+    const post = await postagens.find({categoria:req.params.id}).sort({date:"desc"}).lean()
+    const cat = await categorias.findOne({_id: req.params.id}).lean()
+
+    res.render("categoria/seusposts", {postagem: post, categoria: cat})  
+}catch(err){
+            req.flash("error_msg", "Erro ao exibir postagens referentes a essa categoria")
+        res.redirect("/categoria")
+}
+}
+buscar()})
 
 app.get("/404", (req, res)=>{
     res.send("erro 404!")

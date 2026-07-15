@@ -1,21 +1,54 @@
-<div class="p-5 mb-4 bg-light rounded-3">
-  <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Bem-vindo ao Blog do Gabriel</h1>
-    <p class="col-md-8 fs-4">Esta é uma unidade de herói simples, construída inteiramente com classes utilitárias do Bootstrap 5 para destacar o seu conteúdo principal.</p>
-    <button class="btn btn-primary btn-lg" type="button">Crie uma conta</button>
+<div class="p-5 mb-5 text-white rounded-3 position-relative" 
+     style="background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; min-height: 350px;">
+  
+  <div class="container-fluid py-5 text-center">
+    <h1 class="display-4 fw-bolder mb-3 text-shadow">Bem-vindo à Livraria Secreta</h1>
+    <p class="col-md-8 mx-auto fs-5 opacity-90 mb-4">
+      Explore histórias incríveis, análises de livros, ficção científica e fantasia.
+    </p>
+    <a href="/registro" class="btn btn-warning btn-lg px-4 fw-bold rounded-pill shadow">Crie uma conta</a>
   </div>
 </div>
-<hr>
-<h2>Postagens recentes:</h2>
 
-{{#each postagem}}
-<div class="card">
-    <div class="card-body">
-        <h3>{{titulo}}</h3>
-        <p>{{descricao}}</p>
-        {{categoria.nome}}
+<div class="container mb-5">
+  <h2 class="pb-2 border-bottom mb-4 fw-bold">Postagens recentes</h2>
+
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {{#each postagem}}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 transition-hover">
+        <div style="height: 180px; background-color: #343a40; display: flex; align-items: center; justify-content: center;" class="rounded-top">
+          <i class="bi bi-journal-bookmark-fill text-white fs-1"></i>
+        </div>      
+        <div class="card-body d-flex flex-column">
+          <div class="mb-2">
+            <span class="badge bg-primary text-uppercase px-2 py-1 fs-6">{{categoria.nome}}</span>
+          </div>
+          
+          <h4 class="card-title fw-bold text-dark mb-2">{{titulo}}</h4>
+          
+          <p class="card-text text-secondary flex-grow-1 small">
+            {{descricao}}
+          </p>
+          <div class="mt-3">
+            <a href="/postagem/{{slug}}" class="btn btn-outline-primary btn-sm rounded-pill stretched-link">Saiba Mais</a>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-top-0 pt-0 text-muted small">
+          <hr class="my-2 opacity-25">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>📅 {{data}}</span>
+          </div>
+        </div>
+      </div>
     </div>
+    {{else}}
+    <div class="col-12 text-center py-5">
+      <h5 class="text-muted">Ainda não há nenhuma postagem por aqui. 📚</h5>
+    </div>
+    {{/each}}
+  </div>
 </div>
-{{else}}
-    <h5>Sem postagens</h5>
-{{/each}}
+
+<script src="js/codigo.js"></script>

@@ -1,0 +1,58 @@
+<!-- CABEÇALHO DINÂMICO DA CATEGORIA -->
+<div class="py-5 mb-5 bg-dark text-white rounded-3 position-relative" 
+     style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
+  <div class="container py-4 text-center">
+    <span class="badge bg-warning text-dark fs-6 px-3 py-1 text-uppercase mb-2">Categoria</span>
+    <h1 class="display-4 fw-bolder text-capitalize text-shadow">
+      {{#if categoria}}
+        {{categoria.nome}}
+      {{else}}
+        Posts da Categoria
+      {{/if}}
+    </h1>
+    <p class="lead mb-0 opacity-75">Explore todas as publicações desta seção</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  
+  {{#if postagem}}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {{#each postagem}}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 transition-hover">
+          <div class="card-body d-flex flex-column">
+            <h4 class="card-title fw-bold text-dark mb-3">{{titulo}}</h4>
+            <p class="card-text text-secondary flex-grow-1 small mb-4">
+              {{descricao}}
+            </p>
+            <div class="mt-auto">
+              <a href="/postagem/{{slug}}" class="btn btn-outline-primary btn-sm rounded-pill px-4 stretched-link">Ler</a>
+            </div>
+          </div>
+          {{#if data}}
+          <div class="card-footer bg-transparent border-top-0 pt-0 text-muted small">
+            <hr class="my-2 opacity-25">
+            <span>📅 {{data}}</span>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="d-flex flex-column align-items-center justify-content-center text-center py-5 my-5" style="min-height: 40vh; width: 100%;">
+      <div class="display-1 text-muted mb-3 animate-bounce">📭</div>
+      <h4 class="text-muted fw-bold">Nenhum post por aqui... ainda!</h4>
+      <p class="text-secondary mx-auto" style="max-width: 450px;">
+        Que tal voltar mais tarde ou explorar outras categorias?
+      </p>
+      <div>
+        <a href="/categoria" class="btn btn-primary rounded-pill px-4 py-2 mt-2 shadow-sm">
+          Ver todas as categorias
+        </a>
+      </div>
+    </div>
+  {{/if}}
+
+</div>

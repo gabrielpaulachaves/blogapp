@@ -1,0 +1,30 @@
+<header class="py-5 mb-5 text-white text-center position-relative" 
+        style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1547891654-e66ed7edd96c?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
+    <div class="container py-5 my-4">
+        <span class="badge bg-warning text-dark fs-6 px-3 py-2 text-uppercase mb-3">{{postagem.categoria.nome}}</span>
+        <h1 class="display-4 fw-bolder mb-3 text-shadow">{{postagem.titulo}}</h1>
+        <p class="lead mb-0 opacity-75 fs-5">{{postagem.descricao}}</p>
+    </div>
+</header>
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <article class="lh-base">
+                <p class="fs-5 text-secondary mb-4" style="text-align: justify; text-justify: inter-word;">
+                    {{postagem.conteudo}}
+                </p>
+                <hr class="my-5 opacity-25">
+                <div class="d-flex align-items-center justify-content-between text-muted fs-6">
+                    <div>
+                        <span class="me-2">📍 Identificador:</span>
+                        <code class="bg-light px-2 py-1 rounded text-danger">#{{postagem.slug}}</code>
+                    </div>
+                    <div>
+                        <a href="/" class="btn btn-outline-secondary btn-sm rounded-pill">Voltar para pagina principal</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
