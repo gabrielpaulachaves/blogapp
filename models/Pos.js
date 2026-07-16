@@ -31,5 +31,5 @@ const pos = new schema({
 })
 
 mongoose.model("postagens", pos)
-//
+
 

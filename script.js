@@ -2,6 +2,7 @@
 //npm install --save express-handlebars
 //npm install body-parser --save
 //npm install --save mongoose
+//npm install --save bcryptjs
 
 //24-06-2026, Como configurar sessões:
 //npm install --save express-session
@@ -15,6 +16,7 @@ const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 const app = express()
 const admin = require("./routes/admin")
+const user = require("./routes/usuario")
 const path = require("path")
 
 require("./models/Pos")
@@ -118,6 +120,8 @@ app.get("/404", (req, res)=>{
 })
 
 app.use("/admin", admin)
+app.use("/usuarios", user)
+//isso é como um prefixo para acessar as rotas do arquivo importado
 
 //porta
 const port = 3333

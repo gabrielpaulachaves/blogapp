@@ -1,0 +1,48 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      {{#each erros}}
+        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-3" role="alert">
+          <p style="font-weight: bolder;">Atenção!</p> {{texto}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {{/each}}
+
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <div class="display-5 text-primary mb-2">👤</div>
+            <h2 class="fw-bold text-dark mb-1">Crie sua conta</h2>
+            <p class="text-muted small">Junte-se à nossa comunidade e explore ótimas leituras!</p>
+          </div>
+        <form action="/usuarios/registro/nova" method="post">
+            <div class="mb-3">
+              <label for="nome" class="form-label fw-bold text-secondary">Nome de usuário</label>
+              <input type="text" name="nome" id="nome" class="form-control form-control-lg bg-light border-0">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold text-secondary">E-mail</label>
+              <input type="email" name="email" id="email" class="form-control form-control-lg bg-light border-0">
+            </div>
+            <div class="row">
+              <div class="col-sm-6 mb-3">
+                <label for="senha" class="form-label fw-bold text-secondary">Senha</label>
+                <input type="password" name="senha" id="senha" class="form-control form-control-lg bg-light border-0" placeholder="Mínimo 6 caracteres">
+              </div>
+              <div class="col-sm-6 mb-3">
+                <label for="senha2" class="form-label fw-bold text-secondary">Confirme a senha</label>
+                <input type="password" name="senha2" id="senha2" class="form-control form-control-lg bg-light border-0" placeholder="Repita a senha">
+              </div>
+            </div>
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm fw-bold">
+                Cadastrar Conta
+              </button>
+            </div>
+        </form>
+          <hr class="my-4 opacity-25">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
