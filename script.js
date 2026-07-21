@@ -3,6 +3,9 @@
 //npm install body-parser --save
 //npm install --save mongoose
 //npm install --save bcryptjs
+//npm install --save passport
+//npm install passport-local
+
 
 //24-06-2026, Como configurar sessões:
 //npm install --save express-session
@@ -18,9 +21,11 @@ const app = express()
 const admin = require("./routes/admin")
 const user = require("./routes/usuario")
 const path = require("path")
+const passport = require("passport")
 
 require("./models/Pos")
 require("./models/Cat")
+require("./config/auth")(passport) //passando a const passport como parametro para o arquivo auth
 //configurações
 
 const postagens = mongoose.model("postagens")
@@ -32,6 +37,10 @@ app.use(session({ //aqui a gente cria a session, e na session criamos um objeto,
     resave: true,
     saveUninitialized: true
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(flash())
 //é importante que configurar o flash seja logo apos configurar a session
 
