@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 require("../models/user")
 const user = mongoose.model("usuario")
 const bcrypt = require("bcryptjs")
+const passport = require("passport")
 
 
 router.get("/registro", (req, res)=>{
@@ -70,6 +71,27 @@ router.post("/registro/nova", (req, res)=>{
         res.redirect("/usuarios/registro")  
        })
 }
+})
+
+router.get("/login", (req, res)=>{
+    res.render("usuarios/login")
+})
+
+
+//quem receberá esse post é o passport
+//primeiro os dados que vieram do formulario com a rota para esse post foram para o body, e logo depois chega aqui e é passado para o passport, e entao ele joga para a funcao configurada no auth para a verificacao (ver se o dado existe ou nao)
+//basicamente, o body-parser transformou o body em um objeto JS, para facilitar 
+router.post("/login", (req, res, next)=>{
+        //essa função que usaremos sempre que quisermos autenticar algo
+    passport.authenticate("local", {
+        //caminho que ele redirecionará caso autenticação tenha sido válida
+        successRedirect: "/",
+        //caminho que vai levar caso tenha dado errado
+        failureRedirect: "/usuarios/login",
+        //faz com que as mensagens de erro vao para uma variavel global chamada error (no qual tive que criar para funcionar)
+        failureFlash: true
+    })(req, res, next)
+
 })
 
 

@@ -48,6 +48,7 @@ app.use(flash())
 app.use((req, res, next)=>{ //aqui vamos criar duas variaveis que poderemos acessar em qualquer parte da aplicacao, para criar, será res.locals."nome da variavel" = "chave"
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
+    res.locals.error = req.flash("error")
     //o flash armazena valor temporario usando chave (a chave é a ("success_msg")), a variavel vai guardar a chave req.flash, e essa chave vai procurar o valor pelo codigo.
     //Imagine a situação: req.flash("success_msg", "categoria criada"), entao o res.locals.success_msg vai procurar essa req.flash("success_msg") no codigo e seu valor será "categoria criada". Então para mostrarmos no handlebars, basta {{success_msg}}
     //a chave é essa "success_msg" dentro do req.flash, ai quando achar um valor nessa chave, a variavel .locals. vai receber esse valor
