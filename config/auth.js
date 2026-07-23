@@ -9,14 +9,14 @@ const user = mongoose.model("usuario")
 module.exports = function(passport){
         //aqui estou dizendo qual será o campo que será analisado (no meu caso, o login do usuario é baseado no email, ou seja, cada usuario possui um email diferente e é ele que permitirá login). Já o done é a resposta para aquela busca
        //aqui nessa linha .use(new local) estou dizendo qual estrategia usaremos para autenticacao 
-                                            //names da view
+                                            //names da view                                 //esse done é criado pelo proprio passport, o done é uma funcao para quando terminar a verificacao, ele só "fala" pro passport que terminou
     passport.use(new local({usernameField: "email", passwordField: "senha"}, (email, senha, done)=>{
 
         user.findOne({email: email}).then(usuario =>{
             //para entender essa linha é o seguinte: se o usuario nao existe, entao vai retornar uma callback com null(no caso, seria os dados que nao existem), o false(para representar se a conta foi autenticada, mas nesse caso nao foi), e no final uma mensagem 
             //ou seja, baiscamente nessas primeiras linhas ele vai buscar no banco de dados e ver se o email passado no login existe, aqui já passamos o codigo de resposta caso nao exista. 
             if(!usuario){
-
+            //null = erro interno? não  //false = usuario? nao existe //{message: "Conta não encontrada"} = toma essa informacao extra ai
                 return done(null, false, {message: "Conta não encontrada"})
             }
             //agora, se a conta existe(email), iremos verificar se a senha passada é a mesma do banco de dados
@@ -24,6 +24,7 @@ module.exports = function(passport){
             bcrypt.compare(senha, usuario.senha, (erro, iguais)=>{
                 //se as senhas sao iguais
                 if(iguais){
+                    //null = erro interno? não  //usuario = usuario? aqui
                     return done(null, usuario)
                 }else{
                     return done(null, false, {message: "senha incorreta"})
